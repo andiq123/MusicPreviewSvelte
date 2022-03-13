@@ -2,7 +2,6 @@ import axios, { type AxiosResponse } from 'axios';
 import type { PagedResult } from './types/paged-result.type';
 import type { SongType } from './types/song.type';
 axios.defaults.baseURL = import.meta.env.VITE_BASE_API + '/api/';
-console.log(import.meta.env.VITE_BASE_API);
 
 const resposne = (res: AxiosResponse) => res.data;
 
