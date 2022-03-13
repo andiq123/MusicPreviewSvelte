@@ -1,11 +1,9 @@
 <script lang="ts">
-	import Fa from 'svelte-fa/src/fa.svelte';
-	import { faPlay, faPause } from '@fortawesome/free-solid-svg-icons';
 	import type { SongType } from '../types/song.type';
 	import { currentSong, playStatus } from '../stores';
 	import { PlayStatus } from '$lib/types/play-status.enum';
 	export let song: SongType;
-	let iconStatus = faPlay;
+	let iconStatus = 'fa-play';
 	let isLoading = false;
 	const MAX_LENGTH = 40;
 	const trimIfTooLong = (str: string, limit: number) =>
@@ -20,23 +18,23 @@
 	playStatus.subscribe((playStatus) => {
 		if ($currentSong?.id !== song.id) {
 			isLoading = false;
-			iconStatus = faPlay;
+			iconStatus = 'fa-play';
 			return;
 		}
 		switch (playStatus) {
 			case PlayStatus.PLAYING:
-				iconStatus = faPause;
+				iconStatus = 'fa-pause';
 				isLoading = false;
 				break;
 			case PlayStatus.PAUSED:
-				iconStatus = faPlay;
+				iconStatus = 'fa-play';
 				isLoading = false;
 				break;
 			case PlayStatus.LOADING:
 				isLoading = true;
 				break;
 			default:
-				iconStatus = faPlay;
+				iconStatus = 'fa-play';
 				isLoading = false;
 				break;
 		}
@@ -70,7 +68,7 @@
 			class:loading={isLoading}
 		>
 			{#if !isLoading}
-				<Fa icon={iconStatus} />
+				<i class="fa-solid {iconStatus}" />
 			{/if}
 		</button>
 		<div class="flex flex-col">

@@ -1,6 +1,4 @@
 <script lang="ts">
-	import Fa from 'svelte-fa/src/fa.svelte';
-	import { faPlay, faPause } from '@fortawesome/free-solid-svg-icons';
 	import { playStatus, currentSong } from '../stores';
 	import { PlayStatus } from '$lib/types/play-status.enum';
 	import { onMount } from 'svelte';
@@ -93,9 +91,9 @@
 					on:click={handlePlay}
 				>
 					{#if $playStatus === PlayStatus.PLAYING}
-						<Fa icon={faPause} />
+						<i class="fa-solid fa-pause" />
 					{:else if $playStatus === PlayStatus.PAUSED}
-						<Fa icon={faPlay} />
+						<i class="fa-solid fa-play" />
 					{/if}
 				</button>
 				<div class="flex flex-col w-full">
