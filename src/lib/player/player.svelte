@@ -16,6 +16,7 @@
 			.then((path) => {
 				path = import.meta.env.VITE_BASE_API + path;
 				audio.src = path;
+				playStatus.set(PlayStatus.PLAYING);
 			})
 			.catch((err) => {
 				playStatus.set(PlayStatus.PAUSED);
@@ -46,7 +47,6 @@
 	onMount(() => {
 		audio!.oncanplay = () => {
 			maxTime = audio.duration;
-			playStatus.set(PlayStatus.PLAYING);
 		};
 
 		audio!.ontimeupdate = (e: any) => {
@@ -84,7 +84,7 @@
 			class:pointer-events-none={$playStatus === PlayStatus.LOADING}
 			class="card lg:w-2/4 lg:rounded-xl w-full bg-neutral-focus rounded-none pointer-events-auto"
 		>
-			<div class="card-body w-full h-fit flex lg:flex-row flex-col">
+			<div class="card-body text-gray-50 w-full h-fit flex lg:flex-row flex-col">
 				<button
 					class="btn my-auto lg:w-20 w-full flex-row justify-center align-middle"
 					class:loading={$playStatus === PlayStatus.LOADING}

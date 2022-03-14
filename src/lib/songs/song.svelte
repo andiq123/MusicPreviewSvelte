@@ -2,6 +2,9 @@
 	import type { SongType } from '../types/song.type';
 	import { currentSong, playStatus } from '../stores';
 	import { PlayStatus } from '$lib/types/play-status.enum';
+	import agent from '$lib/agent';
+	import { saveAs } from 'file-saver';
+	const API_URL = import.meta.env.VITE_BASE_API;
 	export let song: SongType;
 	let iconStatus = 'fa-play';
 	let isLoading = false;
@@ -57,6 +60,15 @@
 			}
 		});
 	};
+
+	let isDownloading = false;
+	const downloadFile = async () => {
+		isDownloading = true;
+		const data = await agent.songs.stream(song.streamUrl, song.artist);
+		const downloadLink = API_URL + data.path;
+		saveAs(downloadLink, song.artist + '.mp3');
+		isDownloading = false;
+	};
 </script>
 
 <div class="card w-full bg-base-300 my-1 rounded-none lg:rounded-xl">
@@ -75,5 +87,8 @@
 			<div class="card-title">{song.title}</div>
 			<p class="text-xs">{song.artist}</p>
 		</div>
+		<button class="btn ml-auto" class:loading={isDownloading} on:click={downloadFile}>
+			<i class="fa-solid fa-download" />
+		</button>
 	</div>
 </div>

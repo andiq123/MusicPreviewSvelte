@@ -49,7 +49,12 @@
 	const handleSearch = async ({ detail: searchValue }) => {
 		try {
 			loadingSearch = true;
-			pagedResult = await agent.songs.search(searchValue, 1);
+			if (searchValue) {
+				pagedResult = await agent.songs.search(searchValue, 1);
+			} else {
+				pagedResult = await agent.songs.getMainTracks();
+			}
+
 			noMusic = null;
 			loadingSearch = false;
 			replaceStateWithQuery({ query: searchValue, page: '1' });
